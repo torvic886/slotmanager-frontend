@@ -1,1 +1,20 @@
-<p>maquinas works!</p>
+<div *ngIf="loading">Cargando máquinas...</div>
+<div *ngIf="error">{{ error }}</div>
+<table *ngIf="!loading && maquinas.length">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Fecha instalación</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let m of maquinas">
+      <td>{{ m.id }}</td>
+      <td>{{ m.nombre }}</td>
+      <td>{{ m.fechaInstalacion }}</td>
+      <td>{{ m.estado }}</td>
+    </tr>
+  </tbody>
+</table>

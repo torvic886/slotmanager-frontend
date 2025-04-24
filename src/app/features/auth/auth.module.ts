@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 // import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LucideAngularModule, Mail, Lock } from 'lucide-angular';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    LucideAngularModule.pick({ Mail, Lock }),
     AuthRoutingModule
   ]
 })

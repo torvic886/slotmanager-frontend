@@ -1,29 +1,22 @@
-<div class="maquinas-container">
-    <h2>Lista de Máquinas</h2>
-    <button class="btn btn-primary">Agregar Máquina</button>
-  
-    <table class="maquinas-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Fecha de Instalación</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let maquina of maquinas">
-          <td>{{ maquina.id }}</td>
-          <td>{{ maquina.nombre }}</td>
-          <td>{{ maquina.fecha_instalacion }}</td>
-          <td>{{ maquina.estado }}</td>
-          <td>
-            <button class="btn btn-sm btn-warning">Editar</button>
-            <button class="btn btn-sm btn-danger">Eliminar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+<div *ngIf="loading">Cargando máquinas...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<table *ngIf="!loading && maquinas.length">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Fecha Instalación</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let m of maquinas">
+      <td>{{ m.id }}</td>
+      <td>{{ m.nombre }}</td>
+      <td>{{ m.fechaInstalacion }}</td>
+      <td>{{ m.estado }}</td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="!loading && maquinas.length === 0">No hay máquinas registradas.</div>
