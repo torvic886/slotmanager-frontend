@@ -1,22 +1,87 @@
-<div *ngIf="loading">Cargando máquinas...</div>
-<div *ngIf="error">{{ error }}</div>
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">Listado de Máquinas</h2>
 
-<table *ngIf="!loading && maquinas.length">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nombre</th>
-      <th>Fecha Instalación</th>
-      <th>Estado</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let m of maquinas">
-      <td>{{ m.id }}</td>
-      <td>{{ m.nombre }}</td>
-      <td>{{ m.fechaInstalacion }}</td>
-      <td>{{ m.estado }}</td>
-    </tr>
-  </tbody>
-</table>
-<div *ngIf="!loading && maquinas.length === 0">No hay máquinas registradas.</div>
+  <!-- Botón Agregar encima de la tabla y alineado a la izquierda -->
+  <div class="mb-2">
+    <button class="btn btn-primary" (click)="abrirModalAgregar()">
+      <i class="bi bi-plus-circle"></i> Agregar
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="alert alert-info">Cargando máquinas...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <table class="table table-striped table-bordered" *ngIf="!loading && maquinas.length">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Fecha Instalación</th>
+        <th>Estado</th>
+        <th class="text-center">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of maquinas">
+        <td>{{ m.id }}</td>
+        <td>{{ m.nombre }}</td>
+        <td>{{ m.fechaInstalacion }}</td>
+        <td>{{ m.estado }}</td>
+        <td class="text-center">
+          <button class="btn btn-info btn-sm me-2" (click)="verMaquina(m)">
+            <i class="bi bi-eye"></i>
+          </button>
+          <button class="btn btn-warning btn-sm me-2" (click)="abrirModalEditar(m)">
+            <i class="bi bi-pencil-square"></i>
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="eliminarMaquina(m)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && maquinas.length === 0" class="alert alert-warning">No hay máquinas registradas.</div>
+</div>
+
+<!-- Modal para Agregar/Editar Máquina -->
+<div class="modal fade show" tabindex="-1" style="display: block; background: rgba(0,0,0,0.35);" *ngIf="mostrarModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">{{ maquinaActual?.id ? 'Editar Máquina' : 'Agregar Máquina' }}</h5>
+        <button type="button" class="btn-close" (click)="cerrarModal()" aria-label="Close"></button>
+      </div>
+
+      <div *ngIf="maquinaActual" class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" [(ngModel)]="maquinaActual.nombre" name="nombre" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Fecha de instalación</label>
+            <input type="date" class="form-control" [(ngModel)]="maquinaActual.fechaInstalacion" name="fechaInstalacion" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Estado</label>
+            <select class="form-control" [(ngModel)]="maquinaActual.estado" name="estado" required>
+              <option value="ACTIVA">Activa</option>
+              <option value="INACTIVA">Inactiva</option>
+            </select>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="guardarMaquina()">
+          {{ maquinaActual?.id ? 'Guardar Cambios' : 'Agregar' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

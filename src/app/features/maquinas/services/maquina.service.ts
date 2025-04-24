@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Maquina {
-  id: number;
+  id?: number;
   nombre: string;
   fechaInstalacion: string;
   estado: string;

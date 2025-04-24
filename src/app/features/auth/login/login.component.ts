@@ -27,19 +27,31 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
+  errorMessage = '';
+  loading = false;
+  
+  onSubmit() {
+    this.errorMessage = '';
     if (this.loginForm.valid) {
+      this.loading = true;
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe({
         next: () => {
           this.router.navigate(['/maquinas']);
+          this.loading = false;
         },
         error: err => {
-          alert('Error al iniciar sesión');
-          console.error(err);
+          this.errorMessage = 'Correo o contraseña incorrectos.';
+          this.loading = false;
         }
       });
     }
+  }
+  
+  onForgotPassword(event: Event) {
+    event.preventDefault();
+    // Aquí muestra un modal, redirecciona o lanza una alerta
+    alert('Funcionalidad próximamente disponible.');
   }
 }
 

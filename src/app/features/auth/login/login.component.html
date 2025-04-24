@@ -1,39 +1,103 @@
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-600 animate-fade-in px-2">
-  <div class="bg-white p-4 sm:p-8 rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-md">
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-gradient"
+  style="background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%); padding: 2rem; position: relative;">
 
-    <!-- Logo / título -->
-    <div class="text-center mb-4 sm:mb-6">
-      <h1 class="text-2xl sm:text-3xl font-extrabold text-purple-700">SlotManager</h1>
-      <p class="text-gray-500 text-sm sm:text-base">Bienvenido de nuevo</p>
+  <!-- Icono flotante sobre la tarjeta -->
+  <div style="
+      position: absolute;
+      top: calc(50% - 23rem);
+      left: 50%;
+      transform: translate(-50%, 0);
+      z-index: 10;">
+    <i class="bi bi-joystick" style="font-size: 7.5rem; color: #ffffff; background: none;"></i>
+  </div>
+
+  <!-- Tarjeta del login -->
+  <div class="bg-white p-4 p-sm-5 rounded-4 shadow w-100" style="max-width: 24rem; margin-top: 2.2rem;">
+    <div class="text-center mb-4 mb-sm-5">
+      <h1 class="h1 fw-bold text-primary">SlotManager</h1>
+      <p class="text-secondary small">Bienvenido de nuevo</p>
     </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
-      <div class="relative">
-        <lucide-icon name="Mail" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"></lucide-icon>
-        <input
-          type="email"
-          formControlName="email"
-          placeholder="Correo electrónico"
-          class="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm sm:text-base"
-        />
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Email -->
+      <div class="mb-3">
+        <div class="position-relative">
+          <span class="position-absolute top-50 translate-middle-y ms-3 text-muted" style="left: 0.5rem;">
+            <i class="bi bi-envelope"></i>
+          </span>
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Correo electrónico"
+            class="form-control ps-5"
+            autocomplete="username"
+            [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
+            style="min-height: 2.75rem;"
+          />
+        </div>
+        <div
+          *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          class="invalid-feedback d-block ps-5"
+          style="font-size: 0.92rem;"
+        >
+          Ingresa un correo válido.
+        </div>
       </div>
-
-      <div class="relative">
-        <lucide-icon name="Lock" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"></lucide-icon>
-        <input
-          type="password"
-          formControlName="password"
-          placeholder="Contraseña"
-          class="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm sm:text-base"
-        />
+    
+      <!-- Password -->
+      <div class="mb-3">
+        <div class="position-relative">
+          <span class="position-absolute top-50 translate-middle-y ms-3 text-muted" style="left: 0.5rem;">
+            <i class="bi bi-lock"></i>
+          </span>
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Contraseña"
+            class="form-control ps-5"
+            autocomplete="current-password"
+            [ngClass]="{'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
+            style="min-height: 2.75rem;"
+          />
+        </div>
+        <div
+          *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          class="invalid-feedback d-block ps-5"
+          style="font-size: 0.92rem;"
+        >
+          Ingresa tu contraseña.
+        </div>
       </div>
-
+    
+      <!-- Botón -->
       <button
         type="submit"
-        class="w-full bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-700 transition-all duration-200 text-sm sm:text-base"
+        class="btn btn-primary w-100 fw-semibold py-2"
+        [disabled]="loginForm.invalid || loading"
       >
-        Entrar
+        <span *ngIf="!loading">Entrar</span>
+        <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
       </button>
+    
+      <!-- Links adicionales -->
+      <div class="d-flex justify-content-between mt-3">
+        <a href="#" class="text-decoration-none small" (click)="onForgotPassword($event)">
+          <i class="bi bi-question-circle"></i> ¿Olvidaste tu contraseña?
+        </a>
+        <a routerLink="/auth/register" class="text-decoration-none small text-primary">
+          <i class="bi bi-person-plus"></i> Regístrate
+        </a>
+      </div>
+    
+      <!-- Error general -->
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3 py-2 text-center">
+        <i class="bi bi-exclamation-triangle"></i> {{ errorMessage }}
+      </div>
     </form>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3 py-2 text-center">
+      <i class="bi bi-exclamation-triangle"></i> {{ errorMessage }}
+    </div>
   </div>
 </div>

@@ -1,6 +1,7 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
+
 
 
 @keyframes fade-in {
@@ -11,5 +12,11 @@
   .animate-fade-in {
     animation: fade-in 0.6s ease-out;
   }
+
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #4f8cff 0%, #3358e0 100%);
+  }
+  
   
 

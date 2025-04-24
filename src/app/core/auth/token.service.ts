@@ -27,6 +27,23 @@ export class TokenService {
       return true; // Token corrupto o inválido
     }
   }
+
+  getRole(): string | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+    try {
+      // Si usas jwt-decode:
+      // const decoded: any = jwt_decode(token);
+      // return decoded.role;
+  
+      // Si NO usas jwt-decode (solo base64):
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.role || null;
+    } catch {
+      return null;
+    }
+  }
+  
   
 
   removeToken(): void {

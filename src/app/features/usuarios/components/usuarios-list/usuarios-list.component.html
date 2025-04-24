@@ -1,0 +1,91 @@
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">Lista de Usuarios</h2>
+
+  <!-- Botón Agregar encima de la tabla y alineado a la izquierda -->
+  <div class="mb-2">
+    <button class="btn btn-primary" (click)="cerrarModal()">
+      <i class="bi bi-plus-circle"></i> Agregar
+    </button>
+  </div>
+
+  <!-- Tabla usuarios -->
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios; let i = index">
+          <td>{{ usuario.id }}</td>
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>{{ usuario.role }}</td>
+          <td class="text-center">
+            <!-- Botón Ver -->
+            <button class="btn btn-outline-primary btn-sm me-1" (click)="verUsuario(usuario)">
+              <i class="bi bi-eye"></i>
+            </button>
+            <!-- Botón Editar -->
+            <button class="btn btn-outline-warning btn-sm me-1" (click)="editarUsuario(usuario)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <!-- Botón Eliminar -->
+            <button class="btn btn-outline-danger btn-sm" (click)="eliminarUsuario(usuario)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="usuarios.length === 0" class="text-center text-muted py-4">
+      No hay usuarios registrados.
+    </div>
+  </div>
+
+  <!-- Modal para crear/editar usuario -->
+  <div class="modal fade" id="usuarioModal" tabindex="-1" aria-labelledby="usuarioModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form [formGroup]="usuarioForm" (ngSubmit)="guardarUsuario()" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="usuarioModalLabel">
+            {{ usuarioSeleccionado ? 'Editar usuario' : 'Agregar usuario' }}
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input formControlName="nombre" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input formControlName="email" type="email" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input formControlName="password" [type]="mostrarPassword ? 'text' : 'password'" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Rol</label>
+            <select formControlName="role" class="form-select" required>
+              <option value="ROLE_ADMIN">Admin</option>
+              <option value="ROLE_OPERADOR">Operador</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-success">
+            {{ usuarioSeleccionado ? 'Actualizar' : 'Crear' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
