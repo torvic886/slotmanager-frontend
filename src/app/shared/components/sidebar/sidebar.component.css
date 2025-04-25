@@ -1,0 +1,30 @@
+.sidebar {
+    min-width: 210px;
+    height: 100vh;
+    background: linear-gradient(135deg, #4f8cff 0%, #8b5cf6 100%);
+    box-shadow: 2px 0 10px rgba(0,0,0,0.07);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .sidebar .nav-link {
+    font-size: 1.1rem;
+    color: #fff !important;
+    margin: 0.3rem 0;
+    padding: 0.7rem 0.5rem;
+    border-radius: 6px;
+    transition: background 0.18s;
+  }
+  
+  .sidebar .nav-link.active,
+  .sidebar .nav-link:hover {
+    background: rgba(255,255,255,0.16);
+    color: #fff !important;
+    text-decoration: none;
+  }
+  

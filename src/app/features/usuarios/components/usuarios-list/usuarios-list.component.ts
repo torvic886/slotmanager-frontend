@@ -46,6 +46,13 @@ u: any;
     this.esAdmin = this.tokenService.getRole() === 'ROLE_ADMIN';
   }
 
+  abrirModalAgregar() {
+    this.usuarioSeleccionado = null;                  // No hay usuario seleccionado
+    this.usuarioForm.reset();                         // Limpia el formulario
+    this.mostrarModal = true;                         // Muestra el modal
+    this.mostrarPassword = false;                     // Oculta el password por defecto
+  }
+
   cargarUsuarios() {
     this.loading = true;
     this.usuarioService.listarUsuarios().subscribe({

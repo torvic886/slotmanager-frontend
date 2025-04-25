@@ -1,0 +1,89 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    background: linear-gradient(135deg, transparent, #8b5cf6 100%);
+  }
+  
+  .usuarios-wrapper {
+    background: rgba(40, 45, 65, 0.93);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.11);
+    padding: 2rem 1.2rem;
+    margin: 25px auto 10px auto;
+    max-width: 980px;
+  }
+  
+  h2 {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+    font-size: 2rem;
+  }
+  
+  /* TABLA: altura de filas */
+  .table th,
+  .table td {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    font-size: 0.95rem;
+    vertical-align: middle;
+    height: 35px;
+  }
+  
+  .table {
+    font-size: 0.92rem;
+    margin-bottom: 0;
+  }
+  
+  .table-dark th {
+    background: #222a44;
+    color: #fff;
+    letter-spacing: 1px;
+    font-size: 1rem;
+  }
+  
+  .table-striped > tbody > tr:nth-child(odd) {
+    background-color: rgba(245, 245, 255, 0.11);
+  }
+  
+  /* Botones */
+  .btn-info    { color: #fff !important; }
+  .btn-warning { color: #333 !important; }
+  .btn-danger  { color: #fff !important; }
+  .btn-primary { background-color: #4f8cff !important; border-color: #4f8cff !important; }
+  .btn-primary:hover { background-color: #3358e0 !important; border-color: #3358e0 !important; }
+  .btn-success { background-color: #44d18a !important; border-color: #37c07c !important; }
+  .btn-success:hover { background-color: #36ad70 !important; border-color: #31996b !important; }
+  
+  /* Alertas */
+  .alert-info, .alert-warning, .alert-danger { border-radius: 10px; }
+  
+  /* Scrollbar para la tabla */
+  .table-responsive-scroll {
+    max-height: 360px;
+    overflow-y: auto;
+    background: transparent;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* Header sticky */
+  .table-responsive-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #222a44;
+    color: #fff;
+  }
+  
+  @media (max-width: 700px) {
+    .usuarios-wrapper {
+      padding: 1rem 0.4rem;
+      max-width: 100%;
+      margin-top: 6px;
+    }
+    h2 { font-size: 1.2rem; }
+    .table th, .table td { font-size: 0.88rem; padding: 8px; }
+  }
+  

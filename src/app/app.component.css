@@ -1,4 +1,25 @@
-.bg-gradient-login {
-    background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%) !important;
-    min-height: 100vh;
+
+  .sidebar {
+    min-width: 210px;
+    height: 100vh;
+    background: linear-gradient(135deg, #4f8cff 0%, #8b5cf6 100%);
+    box-shadow: 2px 0 10px rgba(0,0,0,0.07);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
   }
+  
+  .sidebar .nav-link {
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+    color: #fff !important;
+    transition: background 0.2s;
+  }
+  
+  .sidebar .nav-link:hover, .sidebar .nav-link.active {
+    background: rgba(255,255,255,0.12);
+    border-radius: 8px;
+    color: #fff;
+  }
+  

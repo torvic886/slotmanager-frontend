@@ -1,31 +1,9 @@
-<div class="d-flex min-vh-100">
-    <!-- Sidebar -->
-    <nav class="bg-dark text-white flex-shrink-0 p-3" style="width: 250px;">
-      <div class="text-center mb-4">
-        <i class="bi bi-joystick" style="font-size: 4rem; color: #8b5cf6;"></i>
-      </div>
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <a routerLink="/maquinas" class="nav-link text-white">
-            <i class="bi bi-cpu"></i> Máquinas
-          </a>
-        </li>
-        <li>
-          <a routerLink="/usuarios" class="nav-link text-white">
-            <i class="bi bi-people"></i> Usuarios
-          </a>
-        </li>
-        <li>
-          <a routerLink="/recaudos" class="nav-link text-white">
-            <i class="bi bi-cash-coin"></i> Recaudos
-          </a>
-        </li>
-      </ul>
-    </nav>
+<div class="d-flex" style="min-height: 100vh;">
+    <!-- Sidebar fijo a la izquierda -->
+    <app-sidebar></app-sidebar>
   
-    <!-- Contenido principal con fondo degradado -->
-    <div class="flex-grow-1 p-4"
-      style="background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%); min-height: 100vh;">
+    <!-- Contenido principal -->
+    <div class="main-content flex-grow-1 px-3 py-4" style="margin-left: 210px;">
       <router-outlet></router-outlet>
     </div>
   </div>
