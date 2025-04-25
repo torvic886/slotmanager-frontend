@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MaquinaService, Maquina} from '../../services/maquina.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -11,8 +12,11 @@ import { MaquinaService, Maquina} from '../../services/maquina.service';
 export class MaquinasListComponent implements OnInit {
   maquinas: Maquina[] = [];
   mostrarModal = false;
+  modoEdicion = false;
   // maquinaActual: Maquina = this.nuevaMaquina();
+  //maquinaActual: Maquina = this.nuevaMaquina();
   maquinaActual: Maquina | null = null;
+
   loading = false;
   error = '';
   maquinaForm!: FormGroup;
@@ -35,36 +39,58 @@ export class MaquinasListComponent implements OnInit {
   }
 
   abrirModalAgregar() {
-    this.maquinaActual = null; // Si es agregar, limpia los datos
+    this.modoEdicion = false;
+    this.maquinaActual = {
+      nombre: '',
+      fechaInstalacion: '',
+      estado: 'ACTIVA'
+    };
     this.mostrarModal = true;
   }
+  
 
-  abrirModalEditar(maquina: any) {
-    this.maquinaActual = { ...maquina }; // Clona la máquina seleccionada
+  abrirModalEditar(maquina: Maquina) {
+    this.modoEdicion = true;
+    // Hacer copia para no afectar el listado si cancelan
+    this.maquinaActual = { ...maquina };
     this.mostrarModal = true;
   }
+  
 
   cerrarModal() {
     this.mostrarModal = false;
+    this.maquinaActual = null;
+    this.modoEdicion = false;
   }
+  
 
   guardarMaquina() {
-    if (this.maquinaActual && this.maquinaActual.id) {
+    if (this.modoEdicion && this.maquinaActual && this.maquinaActual.id) {
+      // EDITAR
       this.maquinaService.updateMaquina(this.maquinaActual.id, this.maquinaActual).subscribe({
-        next: (actualizada) => {
-          // Actualiza la lista local sin volver a pedir a la API (opcional)
-          const idx = this.maquinas.findIndex(m => m.id === actualizada.id);
-          if (idx > -1) {
-            this.maquinas[idx] = actualizada;
-          }
+        next: (data) => {
+          // Actualizar la máquina en el array local
+          const idx = this.maquinas.findIndex(m => m.id === this.maquinaActual?.id);
+          if (idx !== -1) this.maquinas[idx] = data;
           this.cerrarModal();
+          Swal.fire('¡Editada!', 'La máquina fue editada correctamente', 'success');
         },
-        error: () => {
-          this.error = 'Error al actualizar máquina';
-        }
+        error: () => Swal.fire('Error', 'No se pudo editar la máquina', 'error')
+      });
+    } else if (this.maquinaActual) {
+      // AGREGAR
+      const { id, ...maquinaSinId } = this.maquinaActual;
+      this.maquinaService.createMaquina(maquinaSinId).subscribe({
+        next: (data) => {
+          this.maquinas.push(data);
+          this.cerrarModal();
+          Swal.fire('¡Agregada!', 'La máquina fue registrada exitosamente', 'success');
+        },
+        error: () => Swal.fire('Error', 'No se pudo agregar la máquina', 'error')
       });
     }
   }
+  
 
   verMaquina(maquina: Maquina) {
     // Por ahora puedes mostrar un alert o guardar la máquina en una variable
@@ -97,12 +123,31 @@ export class MaquinasListComponent implements OnInit {
   }
 
   eliminarMaquina(maquina: Maquina) {
-    const confirmacion = confirm(`¿Seguro que deseas eliminar la máquina "${maquina.nombre}"?`);
-    if (confirmacion) {
-      alert(`Eliminar máquina ID: ${maquina.id} (pendiente de implementar)`);
-      // Aquí pones la lógica real para eliminar en el futuro
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `Vas a eliminar la máquina: "${maquina.nombre}"`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.maquinaService.deleteMaquina(maquina.id!).subscribe({
+          next: () => {
+            // Actualiza el listado quitando la máquina eliminada
+            this.maquinas = this.maquinas.filter(m => m.id !== maquina.id);
+            Swal.fire('Eliminada', 'La máquina fue eliminada exitosamente.', 'success');
+          },
+          error: () => {
+            Swal.fire('Error', 'No se pudo eliminar la máquina.', 'error');
+          }
+        });
+      }
+    });
   }
+  
 }
 
 

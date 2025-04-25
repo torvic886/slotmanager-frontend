@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <h2 class="mb-4 text-center">Listado de Máquinas</h2>
 
-  <!-- Botón Agregar encima de la tabla y alineado a la izquierda -->
+  <!-- Botón Agregar encima de la tabla -->
   <div class="mb-2">
     <button class="btn btn-primary" (click)="abrirModalAgregar()">
       <i class="bi bi-plus-circle"></i> Agregar
@@ -28,9 +28,9 @@
         <td>{{ m.fechaInstalacion }}</td>
         <td>{{ m.estado }}</td>
         <td class="text-center">
-          <button class="btn btn-info btn-sm me-2" (click)="verMaquina(m)">
+          <!-- <button class="btn btn-info btn-sm me-2" (click)="verMaquina(m)">
             <i class="bi bi-eye"></i>
-          </button>
+          </button> -->
           <button class="btn btn-warning btn-sm me-2" (click)="abrirModalEditar(m)">
             <i class="bi bi-pencil-square"></i>
           </button>
@@ -41,7 +41,6 @@
       </tr>
     </tbody>
   </table>
-
   <div *ngIf="!loading && maquinas.length === 0" class="alert alert-warning">No hay máquinas registradas.</div>
 </div>
 
@@ -51,7 +50,7 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <h5 class="modal-title">{{ maquinaActual?.id ? 'Editar Máquina' : 'Agregar Máquina' }}</h5>
+        <h5 class="modal-title">{{ modoEdicion ? 'Editar Máquina' : 'Agregar Máquina' }}</h5>
         <button type="button" class="btn-close" (click)="cerrarModal()" aria-label="Close"></button>
       </div>
 
@@ -78,7 +77,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
         <button type="button" class="btn btn-primary" (click)="guardarMaquina()">
-          {{ maquinaActual?.id ? 'Guardar Cambios' : 'Agregar' }}
+          {{ modoEdicion ? 'Guardar Cambios' : 'Agregar' }}
         </button>
       </div>
 
